@@ -1,0 +1,48 @@
+* {
+    box-sizing: border-box;
+}
+
+
+.dark {
+    background-color: #903b01;
+}
+
+.rotated {
+    transform: rotate(180deg);
+}
+
+.cell {
+    width: 64px;
+    height: 64px;
+    text-align: center;
+    font-size: 42px;
+}
+
+.letter__cell {
+    width: 64px;
+    height: 32px;
+    color:#a08a6a;
+    text-align: center;
+}
+
+.number__cell {
+    width: 32px;
+    height: 64px;
+    color:#a08a6a;
+    text-align: center;
+}
+
+table {
+    border-spacing: 0px;
+    background-color: #d8b47c;
+
+}
+
+td.number__cell {
+    border-right: 2px solid #903b01;
+}
+
+td.letter__cell {
+    border-top: 2px solid #903b01;
+}
+
