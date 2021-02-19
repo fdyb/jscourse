@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="content">
+
+    
+    <h1>КОРЗИНА</h1>
+    <div id="cart">
+        
+
+    </div>
+    <div id="cart_total">
+        
+
+    </div>
+    <hr>
+    <h1>КАТАЛОГ</h1>
+    <div id="catalog">
+
+    </div>
+
+</div>
+    <script>
+        var products = [];
+        var cart = [];
+        
+        function Product(id,name,image,price,quantity) {
+            this.id = id;
+            this.name = name;
+            this.image = image;
+            this.price = price;
+            this.quantity = quantity;
+        }
+
+        var products = [
+            new Product(1,'GPS Навигатор туристический Garmin eTrex 10','img/1.jpg',9699,1),
+            new Product(2,'GPS Навигатор туристический Garmin eTrex 20x','img/2.jpg',15999,1),
+            new Product(3,'GPS Навигатор туристический Garmin eTrex 30x','img/3.jpg',21399,1),
+        ];
+
+        products.forEach(product => {
+            var card = document.createElement('div');
+            card.id = "product_"+product.id;
+            card.className = "card";
+            var cardTop = document.createElement('div');
+            cardTop.className = "card__top";
+            cardTop.innerText = product.name;
+            card.append(cardTop);
+            var cardImageBox = document.createElement('div');
+            cardImageBox.className = "card__image__box";
+            card.append(cardImageBox);
+            var cardImagePicture = document.createElement('img');
+            cardImagePicture.className = "card__image__picture";
+            cardImagePicture.src = product.image;
+            cardImagePicture.alt = "изображение товара отсутствует";
+            cardImageBox.append(cardImagePicture);
+            var cardPrice = document.createElement('div');
+            cardPrice.className = "card__price";
+            cardPrice.innerText = product.price + "руб.";
+            cardImageBox.append(cardPrice);
+            var cardBut = document.createElement('button');
+            cardBut.className = "card__buy__button";
+            cardBut.id = product.id;
+            cardBut.innerText = "Купить";
+            card.append(cardBut);
+            document.getElementById("catalog").append(card);
+        });
+
+
+        var arr = document.querySelectorAll('button');
+        arr.forEach(element => {
+            element.onclick = function() {
+                var notInCart = true;
+                cart.forEach(productInCart => {
+                    if (productInCart.id == element.id) {
+                        productInCart.quantity++;
+                        document.getElementById("product_in_cart_q_"+element.id).innerText = +document.getElementById("product_in_cart_q_"+element.id).innerText + 1;
+                        document.getElementById("product_in_cart_sum_"+element.id).innerText = (+document.getElementById("product_in_cart_q_"+element.id).innerText)*(+document.getElementById("product_in_cart_p_"+element.id).innerText);
+                        notInCart = false;
+                        var sumCart = 0;
+                        cart.forEach(productInCart => {sumCart += productInCart.price*productInCart.quantity});
+                        document.getElementById("cart_total").innerText = "Итого товаров на сумму: " + sumCart + " руб."; 
+                    }
+                });
+                    if (notInCart) {
+                        var selectedProduct;
+                        products.forEach(productInCatalog => {
+                            if (productInCatalog.id == element.id) {
+                                cart.push(productInCatalog);
+                                selectedProduct = productInCatalog;
+                            }
+                        });
+                        
+                        var addToCart = document.createElement("div");
+                        addToCart.className = "product__in__cart";
+                        var addToCartName = document.createElement("div");
+                        addToCartName.innerText = cart.length + ". " + selectedProduct.name;
+                        addToCart.append(addToCartName);
+                        var addToCartQuantity = document.createElement("div");
+                        addToCartQuantity.className = "pad";
+                        addToCartQuantity.id = "product_in_cart_q_"+selectedProduct.id;
+                        addToCartQuantity.innerText = '1';
+                        addToCart.append(addToCartQuantity);
+                        var addToCartPrice = document.createElement("div");
+                        addToCartPrice.className = "pad";
+                        addToCartPrice.id = "product_in_cart_p_"+selectedProduct.id;
+                        addToCartPrice.innerText = selectedProduct.price;
+                        addToCart.append(addToCartPrice);
+                        var addToCartSum = document.createElement("div");
+                        addToCartSum.innerText = selectedProduct.price;
+                        addToCartSum.className = "pad";
+                        addToCartSum.id = "product_in_cart_sum_"+selectedProduct.id;
+                        addToCart.append(addToCartSum);
+                        document.getElementById("cart").append(addToCart);
+                        var sumCart = 0;
+                        cart.forEach(productInCart => {sumCart += productInCart.price*productInCart.quantity});
+                        document.getElementById("cart_total").innerText = "Итого товаров на сумму: " + sumCart + " руб."; 
+                    }
+                
+               
+            };
+        });
+
+
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="chess.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <button onclick = "renderChessField(true)">Показать фигуры</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button onclick = "renderChessField()">Показать первые буквы названия фигур</button>
+
+    <div id="chess">
+
+    </div>
+
+    
+    
+<script>
+
+    function Figure(name,code,color) {
+        this.name = name;
+        this.code = code;
+        this.color = color;
+    }
+
+    var chessField = [
+        [
+            new Figure('ладья','&#9814;','белый'),
+            new Figure('конь','&#9816;','белый'),
+            new Figure('слон','&#9815;','белый'),
+            new Figure('король','&#9812;','белый'),
+            new Figure('ферзь','&#9813;','белый'),
+            new Figure('слон','&#9815;','белый'),
+            new Figure('конь','&#9816;','белый'),
+            new Figure('ладья','&#9814;','белый')
+        ],
+        [
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый'),
+            new Figure('пешка','&#9817;','белый')
+        ],
+        [
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        ],
+        [
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        ],
+        [
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        ],
+        [
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        ],
+        [
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный'),
+            new Figure('пешка','&#9823;','черный')
+        ],
+        [
+            new Figure('ладья','&#9820;','черный'),
+            new Figure('конь','&#9822;','черный'),
+            new Figure('слон','&#9821;','черный'),
+            new Figure('король','&#9818;','черный'),
+            new Figure('ферзь','&#9819;','черный'),
+            new Figure('слон','&#9821;','черный'),
+            new Figure('конь','&#9822;','черный'),
+            new Figure('ладья','&#9820;','черный')
+        ],
+        
+    ]
+    
+
+    function renderChessField(showFigures = false) {
+
+    document.querySelector('#chess').innerHTML = '';
+    var table = document.createElement('table');
+    var tr, td, i, j;
+    tr = document.createElement('tr');
+    td = document.createElement('td');
+    tr.append(td);
+    for (j = 0; j<=7; j++) {
+        td = document.createElement('td');
+        td.className = "letter__cell rotated";
+        td.innerHTML = '&#'+(65+j)+';';
+        tr.append(td);
+    }
+    td = document.createElement('td');
+    tr.append(td);
+    table.append(tr);
+
+    for (i = 0; i<=7; i++) {
+        tr = document.createElement('tr');
+        td = document.createElement('td');
+        td.className = "number__cell";
+        td.innerText = 8-i;
+        tr.append(td);
+        for (j = 0; j<=7; j++) {
+            td = document.createElement('td');
+            if (chessField[i][j] !== '') {
+                if (showFigures) {
+                    td.innerHTML = chessField[i][j].code;
+                }
+                else {
+                td.innerText = chessField[i][j].name[0].toUpperCase();
+                }
+            }
+            td.className = 'cell';
+            if (((i+1) % 2 == 0) ^ ((j+1) % 2 == 0)) {
+                td.classList.add('dark');
+            }
+            tr.append(td);          
+        }
+        td = document.createElement('td');
+        td.innerText = 8-i;
+        td.className = "number__cell rotated";
+        tr.append(td);
+        table.append(tr);
+    }
+
+    tr = document.createElement('tr');
+    td = document.createElement('td');
+    tr.append(td);
+    for (j = 0; j<=7; j++) {
+        td = document.createElement('td');
+        td.className = "letter__cell";
+        td.innerHTML = '&#'+(65+j)+';';
+        tr.append(td);
+    }
+    td = document.createElement('td');
+    tr.append(td);
+    table.append(tr);
+
+    document.querySelector('#chess').append(table);
+    }
+  
+</script>
+
+</body>
+</html>
